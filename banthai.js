@@ -1,4 +1,4 @@
-alert("Til hammó með ammó elsku Jói & Stæffí!");
+alert("Til hammó með ammó elsku Jói & Stæffí! <3 <3 <3");
 
 function printMenuItem()
 {
