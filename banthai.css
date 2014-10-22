@@ -153,11 +153,11 @@ span {
 	margin: auto;
 }
 
-/*.banButton:hover {
+.banButton:hover {
 	background: url('http://img.visir.is/apps/pbcsi.dll/storyimage/XZ/20140801/LIFID01/140809911/AR/0/AR-140809911.jpg?MaxW=649&NoBorder=1');
 	background-size: contain;
 	color: white;
-}*/
+}
 
 .banButtonRed {
 margin: auto;

@@ -794,7 +794,9 @@ function printMenuItem()
 	var randomNumber = Math.floor(Math.random() * 112) + 1;
 	var printNumber = (randomNumber + 44);
 
-	console.log(menu.length)
+	console.log(Math.random())
+	console.log(Math.floor(Math.random() * 2))
+	//console.log(menu.length)
 	console.log(randomNumber)
 
 	document.getElementById("action").innerHTML = ("<div id='firstMsg'>HAVE SOME FUCKING");
