@@ -801,7 +801,7 @@ function printMenuItem()
 
 	document.getElementById("action").innerHTML = ("<div id='firstMsg'>HAVE SOME FUCKING");
 	document.getElementById("action").innerHTML += ("<div id='menuItemCourse'>Course </div>");
-	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumber'> &#35; "+  (printNumber) + "</div>");
+	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumber'> halló II &#35; "+  (printNumber) + "</div>");
 	// document.getElementById("action").innerHTML += ("<div id='menuItemName'>" + menu[randomNumber].name + "</div>");
 	document.getElementById("action").innerHTML += ("<div id='menuItemCategory'>" + menu[randomNumber].category + "</div>");
 	// document.getElementById("action").innerHTML += ("</br>");
