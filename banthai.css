@@ -111,6 +111,8 @@ font-size: 112pt;
 font-weight: bold;
 color: #000;
 text-align: center;
+font-size:130%;
+line-height:0;
 }
 
 #menuItemName {
