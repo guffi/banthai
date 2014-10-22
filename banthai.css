@@ -127,8 +127,8 @@ margin-left: 100px;
 }
 
 .banButton {
-	height: 20vh;
-	width: 40vw;
+	height: 2em;
+	width: 4em;
 	border: 0;
 	font-family: times;
 	font-style: italic;
@@ -137,6 +137,7 @@ margin-left: 100px;
 	border-radius: 15px;
 	color: #333;
 	background: #FFBE1A;
+	margin-top: 0.5em;
 }
 
 .banButton:hover {
