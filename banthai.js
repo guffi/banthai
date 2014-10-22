@@ -792,13 +792,14 @@ function printMenuItem()
 	// CREATE A VARIABLE WITH A FOR LOOP THAT GIVES ME THE LENGTH OF THE OBJECT !!!!!!!!!!!!!! THEN REPLACE * 2 WITH THAT VARIABLE
 
 	var randomNumber = Math.floor(Math.random() * 112) + 1;
+	var printNumber = (randomNumber + 44);
 
 	console.log(menu.length)
 	console.log(randomNumber)
 
 	document.getElementById("action").innerHTML = ("<div id='firstMsg'>HAVE SOME FUCKING");
 	document.getElementById("action").innerHTML += ("<div id='menuItemCourse'>Course </div>");
-	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumber'> # "+  (randomNumber + 44) + "</div>");
+	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumber'> # "+  (printNumber) + "</div>");
 	// document.getElementById("action").innerHTML += ("<div id='menuItemName'>" + menu[randomNumber].name + "</div>");
 	document.getElementById("action").innerHTML += ("<div id='menuItemCategory'>" + menu[randomNumber].category + "</div>");
 	// document.getElementById("action").innerHTML += ("</br>");
