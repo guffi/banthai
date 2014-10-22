@@ -128,8 +128,8 @@ margin-left: 100px;
 }
 
 .banButton {
-	height: 2em;
-	width: 4em;
+	height: 200px;
+	width: 400px;
 	border: 0;
 	font-family: times;
 	font-style: italic;
@@ -145,6 +145,7 @@ margin-left: 100px;
 	text-indent: 0px;
 	text-shadow: none;
 	display: inline-block;
+	padding: 0px;
 }
 
 span {
