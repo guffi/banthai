@@ -1,4 +1,4 @@
-/* alert("Til hammó með ammó!"); */
+alert("Til hammó með ammó!");
 
 function printMenuItem()
 {
