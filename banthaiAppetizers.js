@@ -7,309 +7,309 @@ function printMenuItem()
 		1: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 2,
+			category: "Hot Appetizer", 
+			chili: 1,
 		},
 
 		2: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 4,
+			category: "Hot Appetizer", 
+			chili: 0,
 		},
 
 		3: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
+			category: "Hot Appetizer", 
 			chili: 0,
 		},
 
 		4: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
+			category: "Hot Appetizer", 
 			chili: 0,
 		},
 
 		5: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 3,
+			category: "Hot Appetizer", 
+			chili: 0,
 		},
 
 		6: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 1,
+			category: "Hot Appetizer", 
+			chili: 0,
 		},
 
 		7: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 0,
+			category: "Hot Appetizer", 
+			chili: 1,
 		},
 
 		8: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 0,
+			category: "Hot Appetizer", 
+			chili: 3,
 		},
 
 		9: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 2,
+			category: "Hot Appetizer", 
+			chili: 0,
 		},
 
 		10: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 4,
+			category: "Hot Appetizer", 
+			chili: 0,
 		},
 
 		11: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 5,
+			category: "Hot Appetizer", 
+			chili: 2,
 		},
 
 		12: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 2,
+			category: "Hot Appetizer", 
+			chili: 0,
 		},
 
 		13: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 5,
+			category: "Hot Appetizer", 
+			chili: 1,
 		},
 
 		14: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
+			category: "Hot Appetizer", 
 			chili: 2,
 		},
 
 		15: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 2,
+			category: "Hot Appetizer", 
+			chili: 1,
 		},
 
 		16: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 0,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		17: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 1,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		18: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 0,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		19: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
+			category: "Cold Appetizer", 
 			chili: 3,
 		},
 
 		20: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 2,
+			category: "Cold Appetizer", 
+			chili: 0,
 		},
 
 		21: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 1,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		22: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 5,
+			category: "Cold Appetizer", 
+			chili: 0,
 		},
 
 		23: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 2,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		24: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 5,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		25: {
 			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			category: "Stir-fried dish", 
-			chili: 4,
+			category: "Cold Appetizer", 
+			chili: 3,
 		},
 
 		26: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 1,
+			category: "Cold Appetizer",
+			chili: 3,
 		},
 
 		27: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 5,
+			category: "Cold Appetizer",
+			chili: 0,
 		},
 		
 		28: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 1,
+			category: "Barbecue",
+			chili: 3,
 		},
 		
 		29: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 2,
+			category: "Barbecue",
+			chili: 0,
 		},
 		
 		30: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 3,
+			category: "Barbecue",
+			chili: 0,
 		},
 		
 		31: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 3,
+			category: "Barbecue",
+			chili: 2,
 		},
 		
 		32: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 2,
+			category: "Barbecue",
+			chili: 0,
 		},
 		
 		33: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 3,
+			category: "Barbecue",
+			chili: 1,
 		},
 		
 		34: {
 			name: "Curry something",
 			description: "Red curry with coconut milk and bamboo shoots.",
-			category: "Curry dish",
-			chili: 3,
+			category: "Barbecue",
+			chili: 0,
 		},
 		
 		35: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 1,
+			category: "Barbecue",
+			chili: 2,
 		},
 
 		36: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, dcoconut milk and pineapple.",
-			category: "Seafood dish",
+			category: "Barbecue",
 			chili: 0,
 		},
 		
 		37: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 0,
+			category: "Barbecue",
+			chili: 2,
 		},
 		
 		38: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
+			category: "Soup",
 			chili: 3,
 		},
 		
 		39: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 0,
+			category: "Soup",
+			chili: 1,
 		},
 		
 		40: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
+			category: "Soup",
 			chili: 2,
 		},
 		
 		41: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 3,
+			category: "Soup",
+			chili: 2,
 		},
 		
 		42: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 5,
+			category: "Soup",
+			chili: 1,
 		},
 		
 		43: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 2,
+			category: "Soup",
+			chili: 3,
 		},
 		
 		44: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood dish",
-			chili: 3,
+			category: "Soup",
+			chili: 2,
 		},					
 	};
 
