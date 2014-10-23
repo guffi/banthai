@@ -1,7 +1,7 @@
-if(!localStorage["alertdisplayed"]) {
+/* if(!localStorage["alertdisplayed"]) {
     alert("Til hammó með ammó elsku Jói & Stæffí! <3 <3 <3")
     localStorage["alertdisplayed"] = true
-}
+} */
 
 function printMenuItem()
 {
