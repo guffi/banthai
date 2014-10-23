@@ -86,7 +86,7 @@ function printMenuItem()
 	document.getElementById("action").innerHTML += ("<div id='menuItemDescription'>" + menu[randomNumber].description + "</div>");
 	document.getElementById("action").innerHTML += ("<div id='chili'><img src='images/" + menu[randomNumber].chili + "chili.png'></div>");
 	document.getElementById("action").innerHTML += ("<a href='#' id='anotherCourse' onclick='printMenuItem()'>I DON'T FUCKING WANT THIS</a>");
-	document.getElementById("action").innerHTML += ("<a href='index.html' id='somethingElse'>Where are the fucking main courses???</a>");
-	document.getElementById("action").innerHTML += ("<a href='indexAppetizers.html' id='somethingElse'>I just want some fucking appetizer</a>");
+	document.getElementById("action").innerHTML += ("<a href='index.html' id='somethingElse1'>Where are the fucking main courses???</a>");
+	document.getElementById("action").innerHTML += ("<a href='indexAppetizers.html' id='somethingElse2'>I just want some fucking appetizer</a>");
 };
 

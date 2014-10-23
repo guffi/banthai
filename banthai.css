@@ -146,16 +146,23 @@ margin-left: 100px;
 	margin-bottom: 50px;
 	text-align: center;
 	vertical-align: middle;
+	display: inline-block;
 }
 
-#somethingElse {
+#somethingElse1 {
+	font-size: 24pt;
+	color: #444;
+	margin-top: 115px;
+	text-align: center;
+	display: block;
+}
+#somethingElse2 {
 	font-size: 24pt;
 	color: #444;
 	margin-top: 15px;
 	text-align: center;
 	display: block;
 }
-
 .banButton {
 	height: 400px;
 	width: 700px;
