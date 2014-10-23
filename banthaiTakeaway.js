@@ -81,7 +81,7 @@ function printMenuItem()
 
 	document.getElementById("action").innerHTML = ("<div id='firstMsg'>HAVE SOME FUCKING");
 	//document.getElementById("action").innerHTML += ("<div id='menuItemCourse'>Course </div>");
-	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumberTakeaway'>Course # "+  (randomNumber) + "</div>");
+	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumberTakeaway'>Take Away Course # "+  (randomNumber) + "</div>");
 	document.getElementById("action").innerHTML += ("<div id='menuItemName'>" + menu[randomNumber].name + "</div>");
 	document.getElementById("action").innerHTML += ("<div id='menuItemDescription'>" + menu[randomNumber].description + "</div>");
 	document.getElementById("action").innerHTML += ("<div id='chili'><img src='images/" + menu[randomNumber].chili + "chili.png'></div>");
