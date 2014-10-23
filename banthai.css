@@ -64,9 +64,9 @@ text-align: center;
 }
 
 #menuItemCourseNumberTakeaway {
-font-size: 62pt;
-font-weight: bold;
-color: #000;
+font-size: 48pt;
+/*font-weight: bold;*/
+color: #666;
 text-align: center;
 }
 
