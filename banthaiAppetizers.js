@@ -5,87 +5,330 @@ function printMenuItem()
 	var menu = 
 	{
 		1: {
-			name: "Massaman curry",
+			name: "Something stir-fried",
 			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
-			chili: 1,
-		},
-
-		2: {
-			name: "Red curry",
-			description: "Red curry with coconut milk and bamboo shoots.",
-			chili: 3,
-		},
-		3: {
-			name: "Pineapple curry",
-			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Stir-fried dish", 
 			chili: 2,
 		},
 
-		4: {
-			name: "Green curry",
-			description: "Tredition thai green curry with coconut milk, basil and bamboo shoots.",
-			chili: 3,
+		2: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 4,
 		},
-		5: {
-			name: "Pad Thai",
-			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
+
+		3: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
 			chili: 0,
+		},
+
+		4: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 0,
+		},
+
+		5: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 3,
 		},
 
 		6: {
-			name: "Oyster Sauce",
-			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			chili: 0,
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 1,
 		},
+
 		7: {
-			name: "Chicken with cashew nuts",
-			description: "Stir-fried chicken with cashew nuts, onion and mushroom.",
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
 			chili: 0,
 		},
 
-		:8 {
-			name: "Ginger Sauce",
-			description: "Stir-fried. Fish, Pork, Chicken or Squid with ginger and onions.",
+		8: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
 			chili: 0,
-		},		
+		},
+
 		9: {
-			name: "Pad krapow",
-			description: "Stir-fried. Lamb, Beef, Pork, Chicken or Squid with fresh chili, holy basil and onions.",
-			chili: 3,
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 2,
 		},
 
 		10: {
-			name: "Deep fried",
-			description: "Deep-fried vegetables, prawns or squid seved with honey sauce.",
-			chili: 0,
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 4,
 		},
+
 		11: {
-			name: "Stir-fried mixed vegetables",
-			description: "Stir-fried mixed vegetables. Probably really good.",
-			chili: 0,
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 5,
 		},
 
 		12: {
-			name: "Sweet and sour",
-			description: "Stir-fried meat with onions and pineapple.",
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 2,
+		},
+
+		13: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 5,
+		},
+
+		14: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 2,
+		},
+
+		15: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 2,
+		},
+
+		16: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
 			chili: 0,
+		},
+
+		17: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 1,
+		},
+
+		18: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 0,
+		},
+
+		19: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 3,
+		},
+
+		20: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 2,
+		},
+
+		21: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 1,
+		},
+
+		22: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 5,
+		},
+
+		23: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 2,
+		},
+
+		24: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 5,
+		},
+
+		25: {
+			name: "Something stir-fried",
+			description: "Mild and slightly sweet curry with coconut milk, potatoes and peanuts.",
+			category: "Stir-fried dish", 
+			chili: 4,
+		},
+
+		26: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 1,
+		},
+
+		27: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 5,
+		},
+		
+		28: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 1,
+		},
+		
+		29: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 2,
+		},
+		
+		30: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 3,
+		},
+		
+		31: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 3,
+		},
+		
+		32: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 2,
+		},
+		
+		33: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 3,
+		},
+		
+		34: {
+			name: "Curry something",
+			description: "Red curry with coconut milk and bamboo shoots.",
+			category: "Curry dish",
+			chili: 3,
+		},
+		
+		35: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 1,
+		},
+
+		36: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, dcoconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 0,
+		},
+		
+		37: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 0,
+		},
+		
+		38: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 3,
+		},
+		
+		39: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 0,
+		},
+		
+		40: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 2,
+		},
+		
+		41: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 3,
+		},
+		
+		42: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 5,
+		},
+		
+		43: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 2,
+		},
+		
+		44: {
+			name: "Some seafood",
+			description: "A delicious mixture of curry, coconut milk and pineapple.",
+			category: "Seafood dish",
+			chili: 3,
 		},					
 	};
 
 	// CREATE A VARIABLE WITH A FOR LOOP THAT GIVES ME THE LENGTH OF THE OBJECT !!!!!!!!!!!!!! THEN REPLACE * 2 WITH THAT VARIABLE
 
-	var randomNumber = Math.floor(Math.random() * 12) + 1;
+	var randomNumber = Math.floor(Math.random() * 44) + 1;
 
 	console.log(menu.length)
 	console.log(randomNumber)
 
 	document.getElementById("action").innerHTML = ("<div id='firstMsg'>HAVE SOME FUCKING");
 	document.getElementById("action").innerHTML += ("<div id='menuItemCourse'>Course </div>");
-	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumber'> # "+  (randomNumber + 44) + "</div>");
-	document.getElementById("action").innerHTML += ("<div id='menuItemName'>" + menu[randomNumber].name + "</div>");
-	document.getElementById("action").innerHTML += ("<div id='menuItemDescription'>" + menu[randomNumber].description + "</div>");
-	document.getElementById("action").innerHTML += ("</br>");
-	document.getElementById("action").innerHTML += ("<a href='#' id='anotherCourse' onclick='printMenuItem()'>I DON'T FUCKING WANT THIS</a>");
-	document.getElementById("action").innerHTML += ("<img id='chili' src='images/" + menu[randomNumber].chili + "chili.png'>");
+	document.getElementById("action").innerHTML += ("<div id='menuItemCourseNumber'> # "+  (randomNumber) + "</div>");
+	// document.getElementById("action").innerHTML += ("<div id='menuItemName'>" + menu[randomNumber].name + "</div>");
+	document.getElementById("action").innerHTML += ("<div id='menuItemCategory'>" + menu[randomNumber].category + "</div>");
+	// document.getElementById("action").innerHTML += ("</br>");
+	document.getElementById("action").innerHTML += ("<div id='chili'><img src='images/" + menu[randomNumber].chili + "chili.png'></div>");
+	document.getElementById("action").innerHTML += ("<div><a id='anotherCourse' href='#' onclick='printMenuItem()'>I DON'T FUCKING WANT THIS</a></div>");
+	document.getElementById("action").innerHTML += ("<a href='index.html' id='somethingElse'>Where are the fucking main courses???</a>");
+	document.getElementById("action").innerHTML += ("<a href='indexTakeaway.html' id='somethingElse'>I'm fucking eating out</a>");
 };
 

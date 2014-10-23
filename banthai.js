@@ -1,4 +1,4 @@
-alert("Til hammó með ammó elsku Jói & Stæffí! <3 <3 <3");
+//alert("Til hammó með ammó elsku Jói & Stæffí! <3 <3 <3");
 
 function printMenuItem()
 {
@@ -245,273 +245,273 @@ function printMenuItem()
 		35: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 
 		36: {
 			name: "Some seafood",
-			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			description: "A delicious mixture of curry, dcoconut milk and pineapple.",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		37: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		38: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		39: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		40: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		41: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		42: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 5,
 		},
 		
 		43: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		44: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		45: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		46: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		47: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		48: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		49: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		50: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		51: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 5,
 		},
 		
 		52: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		53: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		54: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		55: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		56: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		57: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		58: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		59: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		60: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		61: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		62: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		63: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 3,
 		},
 		
 		64: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		65: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		66: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		67: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		68: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 		
 		69: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		70: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		71: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 2,
 		},
 		
 		72: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 1,
 		},
 		
 		73: {
 			name: "Some seafood",
 			description: "A delicious mixture of curry, coconut milk and pineapple.",
-			category: "Seafood",
+			category: "Seafood dish",
 			chili: 0,
 		},
 
@@ -609,182 +609,182 @@ function printMenuItem()
 		87: {
 			name: "Some rice",
 			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
-			category: "Rice",
+			category: "Rice dish",
 			chili: 0,
 		},
 
 		88: {
 			name: "Some rice",
 			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
-			category: "Rice",
+			category: "Rice dish",
 			chili: 0,
 		},
 		
 		89: {
 			name: "Some rice",
 			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
-			category: "Rice",
+			category: "Rice dish",
 			chili: 3,
 		},
 		
 		90: {
 			name: "Some rice",
 			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
-			category: "Rice",
+			category: "Rice dish",
 			chili: 1,
 		},
 		
 		91: {
 			name: "Some rice",
 			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
-			category: "Rice",
+			category: "Rice dish",
 			chili: 0,
 		},
 		
 		92: {
 			name: "Some rice",
 			description: "Fried rice noodles with Chicken or Pork egg and peanuts.",
-			category: "Rice",
+			category: "Rice dish",
 			chili: 2,
 		},
 
 		93: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 0,
 		},
 
 		94: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 1,
 		},
 		
 		95: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 1,
 		},
 		
 		96: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 2,
 		},
 		
 		97: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 3,
 		},
 		
 		98: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 0,
 		},
 		
 		99: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 2,
 		},
 		
 		100: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 2,
 		},
 		
 		101: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 1,
 		},
 		
 		102: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 0,
 		},
 		
 		103: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 2,
 		},
 		
 		104: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 1,
 		},
 		
 		105: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 3,
 		},
 		
 		106: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 0,
 		},
 		
 		107: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 0,
 		},
 		
 		108: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 3,
 		},
 		
 		109: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 3,
 		},
 		
 		110: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 3,
 		},
 		
 		111: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 2,
 		},
 		
 		112: {
 			name: "Many noodles",
 			description: "Stir-fried  meat with oyster sauce and vegetables.",
-			category: "Noodles",
+			category: "Noodle dish",
 			chili: 0,
 		},				
 	};
@@ -807,6 +807,9 @@ function printMenuItem()
 	// document.getElementById("action").innerHTML += ("</br>");
 	document.getElementById("action").innerHTML += ("<div id='chili'><img src='images/" + menu[randomNumber].chili + "chili.png'></div>");
 	document.getElementById("action").innerHTML += ("<div><a id='anotherCourse' href='#' onclick='printMenuItem()'>I DON'T FUCKING WANT THIS</a></div>");
+	document.getElementById("action").innerHTML += ("<a href='indexAppetizers.html' id='somethingElse'>I just want some fucking appetizer</a>");
+	document.getElementById("action").innerHTML += ("<a href='indexTakeaway.html' id='somethingElse'>I'm fucking eating out</a>");
+
 	// document.getElementById("action").innerHTML += ("<a href='#' id='anotherCourse' onclick='printMenuItem()'>I DON'T FUCKING WANT THIS</a>");
 	
 	// document.getElementById("action").innerHTML += ("<img id='chili' src='images/" + menu[randomNumber].chili + "chili.png'>");
