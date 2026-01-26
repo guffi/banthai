@@ -1,131 +1,147 @@
-/* div {
-	border: solid black 1px;
-}
-*/
-#container { 
-	float: center;
-	width: auto;
-	height: 100%;
-	position: relative;;
-	font-family: Lato, Arial, sans-serif;
+/* Base styles with CSS custom properties for easy theming */
+:root {
+	--color-text-primary: #000;
+	--color-text-secondary: #444;
+	--color-button-yellow: #FFBE1A;
+	--color-button-red: #FF5454;
+	--color-button-green: #02D174;
 }
 
-#top
-{	
-	color: #000;
-	font-size: 76pt;
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+}
+
+#container {
+	width: 100%;
+	height: auto;
+	position: relative;
+	font-family: Lato, Arial, sans-serif;
+	padding: 0 5%;
+}
+
+#top {
+	color: var(--color-text-primary);
+	font-size: clamp(1.5rem, 5vw, 4.75rem);
 	text-align: center;
-	margin-top: 20px;
-	/* margin-bottom: 15px;*/
-	margin-right: 100px;
-	margin-left: 100px;
+	margin-top: 1.25rem;
+	padding: 0 5%;
+	line-height: 1.2;
 }
 
 #action {
-margin-top: 50px;
-font-size: 40pt;
-color: #444;
-float: center;
-height: auto;
-font-family: Lato, Arial, sans-serif;
-position: relative;
-/*margin-bottom: 25px;*/
+	margin-top: clamp(1.5rem, 4vw, 3rem);
+	font-size: clamp(1.25rem, 3vw, 2.5rem);
+	color: var(--color-text-secondary);
+	height: auto;
+	font-family: Lato, Arial, sans-serif;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-#afterAction{
-float: center;
-width: auto;
-text-align: center;
-height: 100%;
-position: relative;
-font-family: Lato, Arial, sans-serif;
+#afterAction {
+	width: 100%;
+	text-align: center;
+	height: auto;
+	position: relative;
+	font-family: Lato, Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	padding: 0 5%;
 }
 
 #firstMsg {
-margin-top: 5px;
-font-size: 40pt;
-color: #444;
-text-align: center;
-margin-bottom: 0.5em;
+	margin-top: 0.3rem;
+	font-size: clamp(1.25rem, 3vw, 2.5rem);
+	color: var(--color-text-secondary);
+	text-align: center;
+	margin-bottom: 0.5em;
 }
 
-
 #just {
-margin-top: 40px;
-margin-right: 100px;
-margin-left: 100px;
-margin-bottom: 0.5em;
-font-size: 40pt;
-color: #444;
-float: center;
-height: auto;
-font-family: Lato, Arial, sans-serif;
-text-align: center;
+	margin-top: clamp(1rem, 3vw, 2.5rem);
+	margin-bottom: 0.5em;
+	font-size: clamp(1.25rem, 3vw, 2.5rem);
+	color: var(--color-text-secondary);
+	height: auto;
+	font-family: Lato, Arial, sans-serif;
+	text-align: center;
+	padding: 0 5%;
 }
 
 #menuItemCourse {
-margin-top: 25px;
-font-size: 48pt;
-color: #444;
-text-align: center;
+	margin-top: 1.5rem;
+	font-size: clamp(1.5rem, 4vw, 3rem);
+	color: var(--color-text-secondary);
+	text-align: center;
 }
 
 #menuItemCourseNumber {
-font-size: 112pt;
-font-weight: bold;
-color: #000;
-text-align: center;
+	font-size: clamp(3rem, 10vw, 7rem);
+	font-weight: bold;
+	color: var(--color-text-primary);
+	text-align: center;
 }
 
 #menuItemCourseNumberTakeaway {
-font-size: 48pt;
-/*font-weight: bold;*/
-color: #444;
-text-align: center;
+	font-size: clamp(1.5rem, 4vw, 3rem);
+	color: var(--color-text-secondary);
+	text-align: center;
 }
 
 #menuItemName {
-margin-top: 5px;
-font-size: 62pt;
-font-weight: bold;
-color: #000;
-text-align: center;
-margin-right: 100px;
-margin-left: 100px;
+	margin-top: 0.3rem;
+	font-size: clamp(1.75rem, 5vw, 3.875rem);
+	font-weight: bold;
+	color: var(--color-text-primary);
+	text-align: center;
+	padding: 0 5%;
+	word-wrap: break-word;
 }
 
 #menuItemCategory {
-font-size: 62pt;
-color: #444;
-text-align: center;
-margin-bottom: 0px;
-margin-right: 100px;
-margin-left: 100px;
+	font-size: clamp(1.75rem, 5vw, 3.875rem);
+	color: var(--color-text-secondary);
+	text-align: center;
+	margin-bottom: 0;
+	padding: 0 5%;
 }
 
 #menuItemDescription {
-font-size: 24pt;
-color: #444;
-text-align: center;
-margin-bottom: 0px;
-margin-right: 100px;
-margin-left: 100px;
+	font-size: clamp(1rem, 2vw, 1.5rem);
+	color: var(--color-text-secondary);
+	text-align: center;
+	margin-bottom: 0;
+	padding: 0 5%;
 }
 
 #chili {
 	position: relative;
-	height: 2em;
+	height: auto;
+	min-height: 2em;
+	margin: 1rem 0;
 }
 
 #chili img {
-	max-width: 30%;
+	max-width: min(30%, 200px);
 	margin: 0 auto;
 	display: block;
 }
 
 #anotherCourse {
 	font-size: 1em;
-	color: #444;
+	color: var(--color-text-secondary);
 	position: relative;
 	text-align: center;
 	display: block;
@@ -133,56 +149,76 @@ margin-left: 100px;
 }
 
 #anotherCourse:visited {
-	color: #444;
+	color: var(--color-text-secondary);
 }
 
 #banWeb {
-	font-size: 24pt;
-	color: #444;
+	font-size: clamp(1rem, 2vw, 1.5rem);
+	color: var(--color-text-secondary);
 	position: fixed;
 	bottom: 0;
 	height: auto;
 	width: 100%;
-	margin-bottom: 50px;
+	margin-bottom: 3rem;
 	text-align: center;
 	vertical-align: middle;
 	display: inline-block;
 }
 
 #somethingElse1 {
-	font-size: 24pt;
-	color: #444;
-	margin-top: 115px;
+	font-size: clamp(1rem, 2vw, 1.5rem);
+	color: var(--color-text-secondary);
+	margin-top: clamp(3rem, 8vw, 7rem);
 	text-align: center;
 	display: block;
 }
+
 #somethingElse2 {
-	font-size: 24pt;
-	color: #444;
-	margin-top: 15px;
+	font-size: clamp(1rem, 2vw, 1.5rem);
+	color: var(--color-text-secondary);
+	margin-top: 1rem;
 	text-align: center;
 	display: block;
 }
-.banButton {
-	height: 400px;
-	width: 700px;
+
+/* Base button styles */
+.banButton,
+.banButtonRed,
+.banButtonGreen {
+	width: min(90vw, 700px);
+	height: auto;
+	min-height: clamp(150px, 30vw, 400px);
 	border: 0;
 	font-family: times;
 	font-style: italic;
-	font-size: 72px;
+	font-size: clamp(2rem, 6vw, 4.5rem);
 	font-weight: bold;
 	border-radius: 15px;
 	color: #333;
-	background: #FFBE1A;
 	text-align: center;
 	letter-spacing: normal;
 	word-spacing: normal;
 	text-transform: none;
 	text-indent: 0px;
 	text-shadow: none;
-	display: inline-block;
-	padding: 0px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem 2rem;
 	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banButton {
+	background: var(--color-button-yellow);
+}
+
+.banButtonRed {
+	background: var(--color-button-red);
+}
+
+.banButtonGreen {
+	background: var(--color-button-green);
 }
 
 span {
@@ -193,50 +229,131 @@ span {
 
 .banButton:hover {
 	background: url('http://img.visir.is/apps/pbcsi.dll/storyimage/XZ/20140801/LIFID01/140809911/AR/0/AR-140809911.jpg?MaxW=649&NoBorder=1');
-	background-size: contain;
+	background-size: cover;
+	background-position: center;
 	color: white;
 }
 
-.banButtonRed {
-	height: 400px;
-	width: 700px;
-	border: 0;
-	font-family: times;
-	font-style: italic;
-	font-size: 72px;
-	font-weight: bold;
-	border-radius: 15px;
-	color: #333;
-	background: #FF5454;
-	text-align: center;
-	letter-spacing: normal;
-	word-spacing: normal;
-	text-transform: none;
-	text-indent: 0px;
-	text-shadow: none;
-	display: inline-block;
-	padding: 0px;
-	cursor: pointer;
+.banButton:active,
+.banButtonRed:active,
+.banButtonGreen:active {
+	transform: scale(0.98);
 }
 
-.banButtonGreen {
-	height: 400px;
-	width: 700px;
-	border: 0;
-	font-family: times;
-	font-style: italic;
-	font-size: 72px;
-	font-weight: bold;
-	border-radius: 15px;
-	color: #333;
-	background: #02D174;
-	text-align: center;
-	letter-spacing: normal;
-	word-spacing: normal;
-	text-transform: none;
-	text-indent: 0px;
-	text-shadow: none;
-	display: inline-block;
-	padding: 0px;
-	cursor: pointer;
+/* Tablet styles */
+@media screen and (max-width: 1024px) {
+	#top {
+		margin-top: 1rem;
+	}
+
+	#somethingElse1 {
+		margin-top: 4rem;
+	}
+}
+
+/* Mobile styles */
+@media screen and (max-width: 600px) {
+	html {
+		font-size: 14px;
+	}
+
+	#container {
+		padding: 0 3%;
+	}
+
+	#top {
+		margin-top: 0.75rem;
+		padding: 0 2%;
+	}
+
+	#action {
+		margin-top: 1rem;
+	}
+
+	#just {
+		margin-top: 0.75rem;
+		padding: 0 2%;
+	}
+
+	#afterAction {
+		padding: 0 2%;
+	}
+
+	#menuItemName,
+	#menuItemCategory,
+	#menuItemDescription {
+		padding: 0 2%;
+	}
+
+	.banButton,
+	.banButtonRed,
+	.banButtonGreen {
+		width: 95vw;
+		min-height: 120px;
+		padding: 1rem 1.5rem;
+		border-radius: 10px;
+	}
+
+	#somethingElse1 {
+		margin-top: 2rem;
+	}
+
+	#somethingElse2 {
+		margin-top: 0.75rem;
+		margin-bottom: 2rem;
+	}
+
+	#chili img {
+		max-width: 50%;
+	}
+}
+
+/* Extra small screens */
+@media screen and (max-width: 380px) {
+	#top {
+		font-size: 1.3rem;
+	}
+
+	#just {
+		font-size: 1.1rem;
+	}
+
+	.banButton,
+	.banButtonRed,
+	.banButtonGreen {
+		font-size: 1.75rem;
+		min-height: 100px;
+	}
+}
+
+/* Landscape mobile orientation */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+	#top {
+		font-size: clamp(1rem, 4vh, 2rem);
+		margin-top: 0.5rem;
+	}
+
+	#just {
+		font-size: clamp(0.9rem, 3vh, 1.5rem);
+		margin-top: 0.5rem;
+	}
+
+	.banButton,
+	.banButtonRed,
+	.banButtonGreen {
+		min-height: 80px;
+		font-size: clamp(1.5rem, 8vh, 3rem);
+	}
+
+	#somethingElse1 {
+		margin-top: 1.5rem;
+	}
+
+	#menuItemCourseNumber {
+		font-size: clamp(2rem, 15vh, 4rem);
+	}
+
+	#menuItemName {
+		font-size: clamp(1.25rem, 6vh, 2rem);
+	}
 }
