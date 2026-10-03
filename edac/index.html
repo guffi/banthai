@@ -36,7 +36,11 @@
 }
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14px;overflow:hidden;line-height:1.4}
-#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab;outline:none}
+#pad{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:grid;grid-template-columns:repeat(4,44px);grid-auto-rows:44px;gap:6px;pointer-events:auto}
+#pad button{padding:0;font-family:var(--display);font-weight:600;font-size:16px;background:var(--panel);border:1px solid var(--panel-edge);touch-action:none;user-select:none;-webkit-user-select:none}
+#pad button:active,#pad button.down{background:var(--btn-on);color:var(--accent-fg)}
+#pad .w{grid-column:2;grid-row:1} #pad .q{grid-column:4;grid-row:1} #pad .a{grid-column:1;grid-row:2} #pad .s{grid-column:2;grid-row:2} #pad .d{grid-column:3;grid-row:2} #pad .e{grid-column:4;grid-row:2}
 #scene.fly{cursor:crosshair}
 #scene.pick{cursor:pointer}
 #hud{position:fixed;inset:0;pointer-events:none;padding:16px;display:grid;grid-template-rows:1fr auto;gap:12px}
@@ -81,7 +85,7 @@ button.icon{padding:4px 8px;font-family:var(--display);font-size:16px;line-heigh
 </head>
 <body>
 <!--/HEAD-->
-<canvas id="scene"></canvas>
+<canvas id="scene" tabindex="0" aria-label="3D view of the eDAC plant"></canvas>
 <div id="loading">Building the plant…</div>
 <div id="hud">
   <div class="panel" id="main">
@@ -146,7 +150,11 @@ button.icon{padding:4px 8px;font-family:var(--display);font-size:16px;line-heigh
     <p class="dim" id="infoDim"></p>
   </div>
 </div>
-<div id="hint"><b>Orbit:</b> drag to turn, wheel to zoom, right-drag or <kbd>Shift</kbd>+drag to pan. <b>Fly:</b> drag to look, <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move, <kbd>Q</kbd>/<kbd>E</kbd> down/up, <kbd>Shift</kbd> fast.</div>
+<div id="hint"><b>Orbit:</b> drag to turn, wheel to zoom, right-drag or <kbd>Shift</kbd>+drag to pan. <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move, <kbd>Q</kbd>/<kbd>E</kbd> down/up, <kbd>Shift</kbd> fast (click the scene first). <b>Fly:</b> drag to look.</div>
+<div id="pad" aria-label="Move">
+  <button class="w" data-k="fwd" title="Forward (W)">W</button><button class="q" data-k="down" title="Down (Q)">Q</button>
+  <button class="a" data-k="left" title="Left (A)">A</button><button class="s" data-k="back" title="Back (S)">S</button><button class="d" data-k="right" title="Right (D)">D</button><button class="e" data-k="up" title="Up (E)">E</button>
+</div>
 <div id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -613,6 +621,7 @@ function setMode(m){
   document.getElementById('modeOrbit').classList.toggle('on', m==='orbit');
   document.getElementById('modeFly').classList.toggle('on', m==='fly');
   canvas.classList.toggle('fly', m==='fly');
+  canvas.focus({preventScroll:true});
 }
 setOrbitFrom(views.overview.pos, views.overview.tgt);
 
@@ -620,6 +629,7 @@ setOrbitFrom(views.overview.pos, views.overview.tgt);
 let drag = null, moved = 0;
 const pinch = {d:0, mid:[0,0]};
 canvas.addEventListener('pointerdown', e=>{
+  canvas.focus({preventScroll:true});
   canvas.setPointerCapture(e.pointerId);
   drag = {x:e.clientX, y:e.clientY, b:e.button, shift:e.shiftKey}; moved = 0;
 });
@@ -662,18 +672,41 @@ canvas.addEventListener('touchmove', e=>{
 function tdist(e){ const a=e.touches[0], b=e.touches[1]; return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY); }
 function tmid(e){ const a=e.touches[0], b=e.touches[1]; return [(a.clientX+b.clientX)/2, (a.clientY+b.clientY)/2]; }
 
-window.addEventListener('keydown', e=>{ if(e.target.tagName==='INPUT') return; state.keys[e.code]=true; if(['Space','ArrowUp','ArrowDown'].includes(e.code)) e.preventDefault(); });
-window.addEventListener('keyup', e=>{ state.keys[e.code]=false; });
-function flyStep(dt){
-  const k = state.keys, sp = (k.ShiftLeft||k.ShiftRight ? 7 : 2.5) * dt;
+const KEYMAP = {KeyW:'fwd',ArrowUp:'fwd',KeyS:'back',ArrowDown:'back',KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right',KeyE:'up',Space:'up',PageUp:'up',KeyQ:'down',KeyC:'down',PageDown:'down',ShiftLeft:'fast',ShiftRight:'fast',
+  w:'fwd',s:'back',a:'left',d:'right',e:'up',q:'down',z:'fwd',Shift:'fast'};
+function keyAction(e){ return KEYMAP[e.code] || KEYMAP[(e.key||'').toLowerCase()] || KEYMAP[e.key]; }
+window.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT' || e.target.tagName==='BUTTON' && e.code==='Space') return;
+  const a = keyAction(e); if(!a) return; state.keys[a]=true; e.preventDefault();
+});
+window.addEventListener('keyup', e=>{ const a = keyAction(e); if(a) state.keys[a]=false; });
+window.addEventListener('blur', ()=>{ for(const k in state.keys) state.keys[k]=false; });
+/* on-screen move pad */
+document.querySelectorAll('#pad button').forEach(b=>{
+  const on = e=>{ e.preventDefault(); state.keys[b.dataset.k]=true; b.classList.add('down'); };
+  const off = ()=>{ state.keys[b.dataset.k]=false; b.classList.remove('down'); };
+  b.addEventListener('pointerdown', on); b.addEventListener('pointerup', off); b.addEventListener('pointercancel', off); b.addEventListener('pointerleave', off);
+});
+function moveStep(dt){
+  const k = state.keys;
+  if(!(k.fwd||k.back||k.left||k.right||k.up||k.down)) return;
+  const sp = (k.fast ? 7 : 2.5) * dt;
   const fwd = new THREE.Vector3(); camera.getWorldDirection(fwd);
-  if(state.eye){ fwd.y = 0; fwd.normalize(); }
+  const flat = state.mode==='orbit' || state.eye;
+  if(flat){ fwd.y = 0; fwd.normalize(); }
   const right = fwd.clone().cross(new THREE.Vector3(0,1,0)).normalize();
-  if(k.KeyW||k.ArrowUp) camera.position.addScaledVector(fwd, sp);
-  if(k.KeyS||k.ArrowDown) camera.position.addScaledVector(fwd, -sp);
-  if(k.KeyA||k.ArrowLeft) camera.position.addScaledVector(right, -sp);
-  if(k.KeyD||k.ArrowRight) camera.position.addScaledVector(right, sp);
-  if(!state.eye){ if(k.KeyE||k.Space) camera.position.y += sp; if(k.KeyQ||k.KeyC) camera.position.y -= sp; }
+  const d = new THREE.Vector3();
+  if(k.fwd) d.addScaledVector(fwd, sp);
+  if(k.back) d.addScaledVector(fwd, -sp);
+  if(k.left) d.addScaledVector(right, -sp);
+  if(k.right) d.addScaledVector(right, sp);
+  if(!state.eye || state.mode==='orbit'){ if(k.up) d.y += sp; if(k.down) d.y -= sp; }
+  if(state.mode==='orbit'){
+    /* orbit: slide the camera and its pivot together */
+    state.target.add(d); if(state.target.y < 0.2){ d.y += 0.2 - state.target.y; state.target.y = 0.2; }
+    applyOrbit(); return;
+  }
+  camera.position.add(d);
   if(state.eye) camera.position.y = 1.7; else camera.position.y = Math.max(0.3, camera.position.y);
 }
 
@@ -739,7 +772,7 @@ function animate(){
   requestAnimationFrame(animate);
   resize();
   const dt = Math.min(clock.getDelta(), 0.05), sim = reduced ? dt*0.25 : dt;
-  if(state.mode==='fly') flyStep(dt);
+  moveStep(dt);
   const t = clock.elapsedTime;
   if(show.flows) for(const f of flows){
     const a = f.pts.geometry.attributes.position;
