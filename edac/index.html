@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--ARTIFACT-START-->
+<title>eDAC Plant Walkthrough</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-bleed 3D viewport, one collapsible instrument panel top-left, info card bottom-left, hint bottom-right. */
+:root{
+  --bg:#dfe6ec;          /* page ground behind canvas */
+  --panel:rgba(246,248,250,.92);
+  --panel-edge:rgba(40,52,60,.18);
+  --fg:#1d262c;
+  --muted:#5c6b74;
+  --accent:#0e7c86;      /* brine teal, the plant's working fluid */
+  --accent-fg:#ffffff;
+  --btn:#e6ecef;
+  --btn-on:#0e7c86;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121a1f; --panel:rgba(22,30,36,.92); --panel-edge:rgba(180,200,210,.18);
+    --fg:#e6edf1; --muted:#9db0ba; --accent:#3cc3cf; --accent-fg:#071517; --btn:#263239; --btn-on:#3cc3cf;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121a1f; --panel:rgba(22,30,36,.92); --panel-edge:rgba(180,200,210,.18);
+  --fg:#e6edf1; --muted:#9db0ba; --accent:#3cc3cf; --accent-fg:#071517; --btn:#263239; --btn-on:#3cc3cf;
+  color-scheme:dark;
+}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14px;overflow:hidden;line-height:1.4}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#scene.fly{cursor:crosshair}
+#scene.pick{cursor:pointer}
+#hud{position:fixed;inset:0;pointer-events:none;padding:16px;display:grid;grid-template-rows:1fr auto;gap:12px}
+.panel{pointer-events:auto;background:var(--panel);border:1px solid var(--panel-edge);border-radius:10px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--fg)}
+#main{width:min(330px,calc(100vw - 32px));max-height:calc(100% - 8px);overflow:auto;display:flex;flex-direction:column;gap:12px;padding:14px 14px 16px;align-self:start}
+#main.collapsed{max-height:none;overflow:hidden;padding-bottom:12px}
+#main.collapsed > *:not(header){display:none}
+header{display:flex;align-items:flex-start;gap:10px}
+header div{min-width:0;flex:1}
+h1{font-family:var(--display);font-weight:700;font-size:24px;line-height:1;margin:0;letter-spacing:.01em;text-wrap:balance}
+.sub{margin:4px 0 0;color:var(--muted);font-size:12px}
+h2{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+button{font:inherit;color:var(--fg);background:var(--btn);border:1px solid transparent;border-radius:6px;padding:6px 10px;cursor:pointer;line-height:1.2}
+button:hover{border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.on{background:var(--btn-on);color:var(--accent-fg)}
+button.icon{padding:4px 8px;font-family:var(--display);font-size:16px;line-height:1}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+.toggles label{display:flex;align-items:center;gap:8px;padding:3px 0;cursor:pointer}
+.toggles input{accent-color:var(--accent);margin:0}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;align-items:center;font-size:13px}
+.chip{width:26px;height:10px;border-radius:5px;border:1px solid rgba(0,0,0,.25)}
+.steps{margin:0;padding-left:20px;display:grid;gap:6px;font-size:13px}
+.steps li::marker{font-family:var(--display);font-weight:700;color:var(--accent)}
+.steps b{font-weight:600}
+#info{position:relative;width:min(360px,calc(100vw - 32px));padding:12px 14px 14px;align-self:end;justify-self:start}
+#info h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0 24px 4px 0;line-height:1.1}
+#info p{margin:0;font-size:13px}
+#info .dim{color:var(--muted);font-size:12px;margin-top:6px;font-variant-numeric:tabular-nums}
+#info .close{position:absolute;top:8px;right:8px}
+#hint{position:fixed;right:16px;bottom:16px;font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--panel-edge);border-radius:8px;padding:8px 10px;pointer-events:none;max-width:280px}
+#hint kbd{font-family:var(--display);font-weight:600;background:var(--btn);border-radius:4px;padding:0 5px;color:var(--fg)}
+#tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font-family:var(--display);font-size:13px;letter-spacing:.04em;padding:3px 8px;border-radius:4px;transform:translate(12px,-28px);white-space:nowrap}
+#loading{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:20px;color:var(--muted);background:var(--bg)}
+@media (max-width:600px){
+  #main{width:calc(100vw - 32px)}
+  #hint{display:none}
+  .steps{font-size:12px}
+}
+@media (prefers-reduced-motion: reduce){ .panel{transition:none} }
+</style>
+</head>
+<body>
+<!--/HEAD-->
+<canvas id="scene"></canvas>
+<div id="loading">Building the plant…</div>
+<div id="hud">
+  <div class="panel" id="main">
+    <header>
+      <div>
+        <h1>eDAC Plant Walkthrough</h1>
+        <p class="sub">Electrochemical direct air capture, Brineworks-style. 1 grid unit = 1 m. Click any component for details.</p>
+      </div>
+      <button class="icon" id="collapse" aria-label="Collapse panel" title="Collapse">–</button>
+    </header>
+    <section>
+      <h2>Navigate</h2>
+      <div class="row">
+        <button id="modeOrbit" class="on">Orbit</button>
+        <button id="modeFly">Fly / walk</button>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <button data-view="overview">Overview</button>
+        <button data-view="contactors">Air contactors</button>
+        <button data-view="stacks">Electrolyzer</button>
+        <button data-view="release">CO₂ release</button>
+        <button data-view="control">Control</button>
+        <button data-view="inside">Up close</button>
+      </div>
+    </section>
+    <section class="toggles">
+      <h2>Show</h2>
+      <label><input type="checkbox" id="tFlows" checked> Liquid and gas flows</label>
+      <label><input type="checkbox" id="tAir" checked> Air flow</label>
+      <label><input type="checkbox" id="tLabels" checked> Labels</label>
+      <label><input type="checkbox" id="tCut" checked> See-through contactor walls</label>
+      <label><input type="checkbox" id="tEye"> Fly at eye level (1.7 m)</label>
+    </section>
+    <section>
+      <h2>Streams</h2>
+      <div class="legend">
+        <span class="chip" style="background:#2fa3cf"></span><span>Brine, the closed saline loop</span>
+        <span class="chip" style="background:#8f6cf5"></span><span>Base (alkaline) to the contactors</span>
+        <span class="chip" style="background:#2fb46f"></span><span>CO₂-rich carbonate liquid</span>
+        <span class="chip" style="background:#f2863d"></span><span>Acid to the release vessel</span>
+        <span class="chip" style="background:#f4f4ee"></span><span>CO₂ gas product</span>
+        <span class="chip" style="background:#8fd3ff"></span><span>Hydrogen</span>
+        <span class="chip" style="background:#c9f27a"></span><span>Oxygen</span>
+        <span class="chip" style="background:#ffffff;opacity:.6"></span><span>Air</span>
+      </div>
+    </section>
+    <section>
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><b>Brine loop.</b> A 1 m³ tank holds the saline working solution. A pump feeds it to the electrolyzer.</li>
+        <li><b>Electrolyzer.</b> DC power splits the brine into an acid stream and a base stream, and co-produces hydrogen and oxygen. It runs on intermittent renewable power.</li>
+        <li><b>Air contactors.</b> Fans pull air through packing wetted with the base. CO₂ reacts with the base and stays in the liquid as carbonate. CO₂-lean air leaves through the top.</li>
+        <li><b>CO₂ release.</b> The carbonate-rich liquid meets the acid in the release vessel. The pH swings back down and CO₂ comes off as a concentrated gas.</li>
+        <li><b>Loop closes.</b> Neutralised brine returns to the tank. The control cabinet sequences pumps, fans and stack current.</li>
+      </ol>
+    </section>
+  </div>
+  <div class="panel" id="info" hidden>
+    <button class="close icon" id="infoClose" aria-label="Close">×</button>
+    <h3 id="infoTitle"></h3>
+    <p id="infoBody"></p>
+    <p class="dim" id="infoDim"></p>
+  </div>
+</div>
+<div id="hint"><b>Orbit:</b> drag to turn, wheel to zoom, right-drag or <kbd>Shift</kbd>+drag to pan. <b>Fly:</b> drag to look, <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move, <kbd>Q</kbd>/<kbd>E</kbd> down/up, <kbd>Shift</kbd> fast.</div>
+<div id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+if(!window.THREE){ document.getElementById('loading').textContent='The 3D library did not load. Check your connection and reload.'; return; }
+
+/* ------------------------------------------------------------------ */
+/* Stream colours (single source of truth, also used by the legend)    */
+const C = {
+  brine:0x2fa3cf, base:0x8f6cf5, carb:0x2fb46f, acid:0xf2863d,
+  co2:0xf4f4ee, h2:0x8fd3ff, o2:0xc9f27a, air:0xffffff
+};
+
+/* ------------------------------------------------------------------ */
+/* Renderer, scene, camera                                              */
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputEncoding = THREE.sRGBEncoding;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xb7cde2);
+scene.fog = new THREE.Fog(0xb7cde2, 45, 140);
+
+const camera = new THREE.PerspectiveCamera(55, 1, 0.05, 400);
+camera.rotation.order = 'YXZ';
+
+const hemi = new THREE.HemisphereLight(0xdfeaf5, 0x6b6a60, 0.5);
+scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff3df, 0.95);
+sun.position.set(18, 28, 12);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -22; sun.shadow.camera.right = 22;
+sun.shadow.camera.top = 22; sun.shadow.camera.bottom = -22;
+sun.shadow.camera.near = 5; sun.shadow.camera.far = 80;
+sun.shadow.bias = -0.0008;
+scene.add(sun);
+
+/* ------------------------------------------------------------------ */
+/* Textures drawn on canvases (no external images allowed)             */
+function canvasTex(size, draw, repeat){
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  draw(c.getContext('2d'), size);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  if(repeat) t.repeat.set(repeat, repeat);
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return t;
+}
+const groundTex = canvasTex(512, (g,s)=>{
+  g.fillStyle='#9a9790'; g.fillRect(0,0,s,s);
+  for(let i=0;i<9000;i++){ const v=120+Math.random()*60|0; g.fillStyle=`rgb(${v},${v-2},${v-6})`; g.fillRect(Math.random()*s,Math.random()*s,1+Math.random()*2,1+Math.random()*2); }
+  g.strokeStyle='rgba(60,60,55,.35)'; g.lineWidth=2; g.strokeRect(1,1,s-2,s-2); /* paving joint */
+}, 60);
+const packingTex = canvasTex(256, (g,s)=>{
+  g.fillStyle='#d9dde0'; g.fillRect(0,0,s,s);
+  g.strokeStyle='rgba(90,100,110,.7)'; g.lineWidth=2;
+  for(let x=0;x<s;x+=16){ g.beginPath(); g.moveTo(x,0); g.lineTo(x+8,s); g.stroke(); }
+  g.strokeStyle='rgba(90,100,110,.35)';
+  for(let y=0;y<s;y+=12){ g.beginPath(); g.moveTo(0,y); g.lineTo(s,y); g.stroke(); }
+}, 6);
+const dotTex = canvasTex(64, (g,s)=>{
+  const r = g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+  r.addColorStop(0,'rgba(255,255,255,1)'); r.addColorStop(0.45,'rgba(255,255,255,.85)'); r.addColorStop(1,'rgba(255,255,255,0)');
+  g.fillStyle=r; g.fillRect(0,0,s,s);
+});
+dotTex.wrapS = dotTex.wrapT = THREE.ClampToEdgeWrapping;
+const hmiTex = canvasTex(256, (g,s)=>{
+  g.fillStyle='#0b1f2a'; g.fillRect(0,0,s,s);
+  g.fillStyle='#3cc3cf'; g.font='bold 22px sans-serif'; g.fillText('eDAC  PLC', 14, 34);
+  g.fillStyle='#d7e6ec'; g.font='15px monospace';
+  const rows=['STACK A   412 A  2.1 V/cell','STACK B   408 A  2.1 V/cell','FANS      3/3   61 %','BASE pH   13.1','RELEASE pH 4.2','CO2 OUT   11.4 kg/h','H2 OUT    0.42 kg/h','PV IN     38 kW'];
+  rows.forEach((r,i)=>g.fillText(r,14,70+i*22));
+  g.fillStyle='#2fb46f'; g.fillRect(s-30,12,16,16);
+});
+hmiTex.wrapS = hmiTex.wrapT = THREE.ClampToEdgeWrapping;
+
+/* ------------------------------------------------------------------ */
+/* Materials                                                           */
+const M = {
+  galv:   new THREE.MeshStandardMaterial({color:0xb9c0c6, metalness:.55, roughness:.45}),
+  galvT:  new THREE.MeshStandardMaterial({color:0xb9c0c6, metalness:.55, roughness:.45, transparent:true, opacity:.22, depthWrite:false, side:THREE.DoubleSide}),
+  frame:  new THREE.MeshStandardMaterial({color:0x3a4047, metalness:.5, roughness:.6}),
+  steelBlue: new THREE.MeshStandardMaterial({color:0x4c6a86, metalness:.4, roughness:.55}),
+  concrete:new THREE.MeshStandardMaterial({color:0xa6a39c, roughness:.95}),
+  dark:   new THREE.MeshStandardMaterial({color:0x22262a, roughness:.7}),
+  plateA: new THREE.MeshStandardMaterial({color:0x767c84, metalness:.6, roughness:.4}),
+  plateB: new THREE.MeshStandardMaterial({color:0x50565d, metalness:.6, roughness:.4}),
+  rod:    new THREE.MeshStandardMaterial({color:0xd7dade, metalness:.8, roughness:.3}),
+  copper: new THREE.MeshStandardMaterial({color:0xb87333, metalness:.7, roughness:.35}),
+  cabinet:new THREE.MeshStandardMaterial({color:0xd6d9d2, roughness:.6}),
+  cabinetDark:new THREE.MeshStandardMaterial({color:0x5a6066, roughness:.6, metalness:.3}),
+  hdpe:   new THREE.MeshStandardMaterial({color:0xeef2f4, roughness:.5, transparent:true, opacity:.45, depthWrite:false}),
+  packing:new THREE.MeshStandardMaterial({map:packingTex, roughness:.9}),
+  glass:  new THREE.MeshStandardMaterial({color:0xdde8ee, roughness:.15, metalness:.1, transparent:true, opacity:.35, depthWrite:false, side:THREE.DoubleSide}),
+  black:  new THREE.MeshStandardMaterial({color:0x111214, roughness:.8}),
+  pv:     new THREE.MeshStandardMaterial({color:0x14213a, roughness:.25, metalness:.4}),
+  liquid: (hex)=> new THREE.MeshStandardMaterial({color:hex, roughness:.3, transparent:true, opacity:.75, depthWrite:false, emissive:hex, emissiveIntensity:.08}),
+  pipe:   (hex)=> new THREE.MeshStandardMaterial({color:hex, roughness:.5, transparent:true, opacity:.38, depthWrite:false}),
+};
+
+/* ------------------------------------------------------------------ */
+/* Small builders                                                      */
+function box(w,h,d,mat,x,y,z,parent){
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+  m.position.set(x,y,z); m.castShadow = true; m.receiveShadow = true;
+  (parent||scene).add(m); return m;
+}
+function cyl(rt,rb,h,mat,x,y,z,parent,seg){
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg||24), mat);
+  m.position.set(x,y,z); m.castShadow = true; m.receiveShadow = true;
+  (parent||scene).add(m); return m;
+}
+function group(x,y,z,info){
+  const g = new THREE.Group(); g.position.set(x,y,z);
+  if(info){ g.userData.info = info; pickables.push(g); }
+  scene.add(g); return g;
+}
+const pickables = [];
+const labels = [];
+function label(text, x,y,z, scale){
+  const pad = 14, fs = 34;
+  const c = document.createElement('canvas'); const g = c.getContext('2d');
+  g.font = `600 ${fs}px "Barlow Condensed", "Arial Narrow", sans-serif`;
+  const w = Math.ceil(g.measureText(text).width) + pad*2, h = fs + pad*1.3;
+  c.width = w; c.height = h;
+  g.font = `600 ${fs}px "Barlow Condensed", "Arial Narrow", sans-serif`;
+  g.fillStyle = 'rgba(20,28,34,.82)';
+  const r = 10; g.beginPath(); g.moveTo(r,0); g.lineTo(w-r,0); g.quadraticCurveTo(w,0,w,r); g.lineTo(w,h-r); g.quadraticCurveTo(w,h,w-r,h); g.lineTo(r,h); g.quadraticCurveTo(0,h,0,h-r); g.lineTo(0,r); g.quadraticCurveTo(0,0,r,0); g.fill();
+  g.fillStyle = '#f2f6f8'; g.textBaseline = 'middle'; g.fillText(text, pad, h/2+1);
+  const t = new THREE.CanvasTexture(c); t.minFilter = THREE.LinearFilter;
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({map:t, transparent:true, depthTest:false}));
+  const k = (scale||1) * 0.0065;
+  s.scale.set(w*k, h*k, 1); s.position.set(x,y,z); s.renderOrder = 10;
+  s.userData = {text, x, y, z, scale, w:w*k, h:h*k};
+  scene.add(s); labels.push(s); return s;
+}
+
+/* Pipes as straight segments joined by spheres; returns the path for particles. */
+function pathFrom(pts){
+  const p = new THREE.CurvePath();
+  for(let i=0;i<pts.length-1;i++) p.add(new THREE.LineCurve3(new THREE.Vector3(...pts[i]), new THREE.Vector3(...pts[i+1])));
+  return p;
+}
+const flows = [];
+function pipe(pts, hex, r, opts){
+  opts = opts||{};
+  const mat = M.pipe(hex);
+  const path = pathFrom(pts);
+  for(let i=0;i<pts.length-1;i++){
+    const a = new THREE.Vector3(...pts[i]), b = new THREE.Vector3(...pts[i+1]);
+    const len = a.distanceTo(b);
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 12), mat);
+    m.position.copy(a).lerp(b, .5);
+    m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), b.clone().sub(a).normalize());
+    m.castShadow = true; m.renderOrder = 1; scene.add(m);
+    if(i>0){ const j = new THREE.Mesh(new THREE.SphereGeometry(r*1.05, 10, 10), mat); j.position.copy(a); j.renderOrder=1; scene.add(j); }
+  }
+  if(opts.flow !== false) flow(path, hex, opts.n || Math.round(path.getLength()*6), opts.speed || 0.9, opts.size || r*1.6);
+  return path;
+}
+function flow(path, hex, n, speed, size){
+  const pos = new Float32Array(n*3);
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({color:hex, size, map:dotTex, transparent:true, opacity:.95, depthWrite:false, sizeAttenuation:true});
+  const pts = new THREE.Points(geo, mat); pts.renderOrder = 2; pts.frustumCulled = false;
+  const off = new Float32Array(n); for(let i=0;i<n;i++) off[i] = i/n;
+  const len = path.getLength();
+  flows.push({pts, path, off, speed: speed/len, n});
+  scene.add(pts); return pts;
+}
+/* Free particles (air, spray, bubbles): each has a spawn box, velocity and a lifetime axis. */
+const clouds = [];
+function cloud(n, hex, size, opacity, spawn, vel, life, kind){
+  const pos = new Float32Array(n*3), age = new Float32Array(n);
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({color:hex, size, map:dotTex, transparent:true, opacity, depthWrite:false});
+  const pts = new THREE.Points(geo, mat); pts.renderOrder = 3; pts.frustumCulled = false;
+  const c = {pts, n, pos, age, spawn, vel, life, kind};
+  for(let i=0;i<n;i++){ respawn(c,i); age[i] = Math.random()*life; stepParticle(c,i,age[i]); }
+  clouds.push(c); scene.add(pts); return c;
+}
+function respawn(c,i){
+  const s = c.spawn;
+  c.pos[i*3]   = s[0] + (Math.random()-.5)*s[3];
+  c.pos[i*3+1] = s[1] + (Math.random()-.5)*s[4];
+  c.pos[i*3+2] = s[2] + (Math.random()-.5)*s[5];
+  c.age[i] = 0;
+}
+function stepParticle(c,i,dt){
+  c.age[i] += dt;
+  if(c.age[i] > c.life){ respawn(c,i); return; }
+  const v = c.vel, spread = c.kind==='plume' ? c.age[i]*0.25 : 0;
+  c.pos[i*3]   += (v[0] + (Math.random()-.5)*spread)*dt;
+  c.pos[i*3+1] += v[1]*dt;
+  c.pos[i*3+2] += (v[2] + (Math.random()-.5)*spread)*dt;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ground                                                              */
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(300,300), new THREE.MeshStandardMaterial({map:groundTex, roughness:.95}));
+ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
+const grid = new THREE.GridHelper(60, 60, 0x6a7a80, 0x8a9aa0); grid.position.y = 0.005; grid.material.transparent = true; grid.material.opacity = .28; scene.add(grid);
+
+/* ------------------------------------------------------------------ */
+/* AIR CONTACTORS: 3 units, each 2 m wide (x), 1 m deep (z), 3 m high  */
+const AC_Z = -5, AC_X = [-5, -2.5, 0];
+const cutaway = [];   /* wall meshes that go see-through */
+const fans = [];
+const airClouds = [];
+AC_X.forEach((cx, idx)=>{
+  const g = group(cx, 0, AC_Z, {
+    title:`Air contactor AC-${idx+1}`,
+    body:'A fan on top pulls ambient air in through the front louvres and across the packing. Base solution from the electrolyzer trickles down the packing from a spray header. CO₂ in the air reacts with the hydroxide and is held in the liquid as carbonate, which collects in the sump. The CO₂-lean air leaves upward.',
+    dim:'2.0 m wide × 1.0 m deep × 3.0 m high. Housing: galvanised steel on a concrete plinth.'
+  });
+  box(2.2, .15, 1.2, M.concrete, 0, .075, 0, g);                  /* plinth */
+  /* corner posts + rails */
+  [[-1,-.5],[1,-.5],[-1,.5],[1,.5]].forEach(([x,z])=> box(.08,3,.08,M.frame,x,1.65,z,g));
+  [[1.65,-.5],[1.65,.5],[3.11,-.5],[3.11,.5]].forEach(([y,z])=> box(2.08,.08,.08,M.frame,0,y,z,g));
+  [[1.65,-1],[1.65,1],[3.11,-1],[3.11,1]].forEach(([y,x])=> box(.08,.08,1.08,M.frame,x,y,0,g));
+  /* walls: back, left, right (see-through), top deck */
+  cutaway.push(box(2, 2.95, .02, M.galvT, 0, 1.63, -.5, g));
+  cutaway.push(box(.02, 2.95, 1, M.galvT, -1, 1.63, 0, g));
+  cutaway.push(box(.02, 2.95, 1, M.galvT, 1, 1.63, 0, g));
+  const deck = box(2.1, .05, 1.1, M.galv, 0, 3.17, 0, g);
+  /* front: sump panel (opaque) + louvres */
+  box(2, .45, .02, M.galv, 0, .375, .5, g);
+  for(let i=0;i<13;i++){ const s = box(1.9, .03, .16, M.galv, 0, .72+i*.165, .5, g); s.rotation.x = -0.6; }
+  box(.06,2.3,.05,M.frame,-.97,1.75,.5,g); box(.06,2.3,.05,M.frame,.97,1.75,.5,g);
+  /* packing block */
+  box(1.84, 1.8, .84, M.packing, 0, 1.6, 0, g);
+  /* spray header + nozzles */
+  const hdr = cyl(.035,.035,1.8,M.steelBlue,0,2.72,0,g); hdr.rotation.z = Math.PI/2;
+  for(let i=-3;i<=3;i++) cyl(.02,.05,.08,M.steelBlue,i*.27,2.66,0,g,8);
+  /* sump liquid */
+  box(1.84, .32, .84, M.liquid(C.carb), 0, .36, 0, g);
+  /* fan on top */
+  const fh = cyl(.5,.5,.4,M.dark,0,3.4,0,g,32);
+  const guard = new THREE.Mesh(new THREE.TorusGeometry(.5,.02,8,40), M.rod); guard.rotation.x=Math.PI/2; guard.position.set(0,3.62,0); g.add(guard);
+  const hub = cyl(.08,.08,.1,M.rod,0,3.55,0,g,16);
+  const blades = new THREE.Group(); blades.position.set(0,3.55,0); g.add(blades);
+  for(let b=0;b<5;b++){ const bl = box(.4,.012,.14,M.black,0,0,0,blades); bl.position.set(Math.cos(b*1.2566)*.26,0,Math.sin(b*1.2566)*.26); bl.rotation.y = -b*1.2566; bl.rotation.x = .5; }
+  fans.push(blades);
+  /* motor on top of hub */
+  cyl(.1,.1,.18,M.frame,0,3.75,0,g,16);
+  /* name plate */
+  label(`AC-${idx+1}`, cx, 3.95, AC_Z, .8);
+  /* spray inside: base falling over packing */
+  cloud(140, C.base, .07, .85, [cx, 2.65, AC_Z, 1.7, 0.05, 0.7], [0,-1.1,0], 1.9, 'drop');
+  /* air in through the louvres */
+  airClouds.push(cloud(160, C.air, .1, .3, [cx, 1.7, AC_Z+2.6, 1.9, 1.9, 0.3], [0,0,-1.6], 1.55, 'air'));
+  /* exhaust plume out of the fan */
+  airClouds.push(cloud(120, C.air, .13, .28, [cx, 3.7, AC_Z, 0.8, 0.1, 0.8], [0,1.6,0], 2.2, 'plume'));
+});
+label('AIR CONTACTORS · air in through louvres, CO₂ captured by base, lean air out the top', -2.5, 4.9, AC_Z, 1);
+
+/* ------------------------------------------------------------------ */
+/* ELECTROLYZER SKID at x≈6.5, z≈-1                                    */
+{
+  const g = group(6.5, 0, -1.0, {
+    title:'Electrolyzer stacks (A and B)',
+    body:'The heart of the system. DC current drives water splitting in the stack: the cathode side turns alkaline and gives off hydrogen, the anode side turns acidic and gives off oxygen. Fed with brine, the stack delivers a base stream and an acid stream. The design uses no precious metals and tolerates stopping and starting, so it can follow solar and wind output.',
+    dim:'2 stacks, each ≈1.2 m long × 0.7 m × 0.7 m, 24 cells, on a 3.0 m × 1.6 m steel skid.'
+  });
+  box(3.0,.14,1.7,M.frame,0,.07,0,g);
+  [-.4,.4].forEach(z=>{
+    [-.45,.45].forEach(x=> box(.5,.3,.4,M.frame,x,.29,z,g));
+    box(.1,.7,.7,M.dark,-.65,.79,z,g); box(.1,.7,.7,M.dark,.65,.79,z,g);          /* end plates */
+    for(let i=0;i<24;i++) box(.045,.64,.64,(i%2?M.plateA:M.plateB), -.58+i*.0504,.79,z,g); /* cells */
+    [[-.3,-.3],[.3,-.3],[-.3,.3],[.3,.3]].forEach(([y,zz])=>{ const r=cyl(.015,.015,1.5,M.rod,0,.79+y,z+zz,g,8); r.rotation.z=Math.PI/2; });
+    box(.08,.2,.2,M.steelBlue,-.74,.79,z,g); box(.08,.2,.2,M.steelBlue,.74,.79,z,g); /* manifolds */
+  });
+  label('ELECTROLYZER STACKS · brine → acid + base, co-produces H₂ and O₂', 6.5, 2.35, -1.0, 1);
+  label('A', 6.5, 1.3, -1.4, .7); label('B', 6.5, 1.3, -0.6, .7);
+}
+
+/* ------------------------------------------------------------------ */
+/* BRINE TANK (1 m³ IBC style) + PUMP                                  */
+{
+  const g = group(6.5, 0, 3.5, {
+    title:'Brine tank, 1 m³',
+    body:'Holds the closed-loop saline working solution. Nothing is consumed here: brine goes out to the electrolyzer, comes back neutralised from the release vessel, and goes round again. Only make-up water for evaporation losses is added.',
+    dim:'IBC-style tank, 1.2 m × 1.0 m × 1.15 m on a steel pallet.'
+  });
+  box(1.2,.12,1.0,M.frame,0,.06,0,g);
+  box(1.14,1.0,.94,M.hdpe,0,.66,0,g);
+  box(1.1,.68,.9,M.liquid(C.brine),0,.5,0,g);
+  for(let i=0;i<=4;i++){ box(1.2,.025,.025,M.galv,0,.14+i*.26,-.5,g); box(1.2,.025,.025,M.galv,0,.14+i*.26,.5,g); box(.025,.025,1.0,M.galv,-.6,.14+i*.26,0,g); box(.025,.025,1.0,M.galv,.6,.14+i*.26,0,g); }
+  for(let i=0;i<=4;i++){ box(.025,1.05,.025,M.galv,-.6+i*.3,.66,-.5,g); box(.025,1.05,.025,M.galv,-.6+i*.3,.66,.5,g); }
+  cyl(.1,.1,.08,M.dark,0,1.2,0,g,16);                      /* fill cap */
+  cyl(.05,.05,.3,M.dark,-.65,.25,0,g,12).rotation.z=Math.PI/2; /* outlet valve */
+  label('BRINE TANK 1 m³ · closed saline loop', 6.5, 1.75, 3.5, 1);
+
+  const p = group(5.2, 0, 3.5, {title:'Brine pump', body:'Circulates the brine from the tank through the electrolyzer and on round the loop. Shown schematically.', dim:'Small centrifugal pump on a base plate.'});
+  box(.5,.06,.4,M.frame,0,.03,0,p);
+  cyl(.11,.11,.32,M.steelBlue,.08,.22,0,p,16).rotation.z=Math.PI/2;
+  cyl(.13,.13,.08,M.steelBlue,-.16,.22,0,p,16).rotation.z=Math.PI/2;
+  label('PUMP', 5.2, .7, 3.5, .7);
+}
+
+/* ------------------------------------------------------------------ */
+/* CO₂ RELEASE VESSEL (acid dosing / stripper)                         */
+{
+  const g = group(2.5, 0, 2.0, {
+    title:'CO₂ release vessel',
+    body:'Carbonate-rich liquid from the contactor sumps is dosed with the acid stream. Dropping the pH converts carbonate back to dissolved CO₂, which comes out of solution as a concentrated gas and is drawn off the top. The neutralised liquid, now plain brine again, returns to the tank. This is the second half of the pH swing.',
+    dim:'Vertical vessel, Ø1.0 m × 2.0 m on legs. Gas space at top, liquid in the lower two thirds.'
+  });
+  [[-.35,-.35],[.35,-.35],[-.35,.35],[.35,.35]].forEach(([x,z])=> box(.06,.5,.06,M.frame,x,.25,z,g));
+  cyl(.5,.5,2.0,M.glass,0,1.5,0,g,32);
+  cyl(.48,.48,1.25,M.liquid(C.carb),0,1.13,0,g,32);
+  cyl(.5,.5,.06,M.steelBlue,0,2.53,0,g,32); cyl(.5,.5,.06,M.steelBlue,0,.47,0,g,32);
+  cyl(.1,.1,.2,M.steelBlue,0,2.6,0,g,16);
+  label('CO₂ RELEASE VESSEL · acid + carbonate → CO₂ gas', 2.5, 3.2, 2.0, 1);
+  /* bubbles rising inside */
+  cloud(120, C.co2, .06, .9, [2.5, .7, 2.0, .7, .1, .7], [0,.9,0], 1.5, 'bubble');
+}
+
+/* CO₂ product buffer */
+{
+  const g = group(-1.0, 0, 3.4, {
+    title:'CO₂ product buffer',
+    body:'Concentrated CO₂ from the release vessel collects here before compression. From here it goes to storage or, in Brineworks’ plan, to e-fuel synthesis together with the hydrogen.',
+    dim:'Horizontal vessel, Ø0.9 m × 1.8 m, on saddles.'
+  });
+  [-.5,.5].forEach(x=> box(.2,.35,.9,M.frame,x,.18,0,g));
+  cyl(.45,.45,1.8,M.cabinet,0,.8,0,g,32).rotation.z=Math.PI/2;
+  cyl(.45,.45,.06,M.cabinet,-.92,.8,0,g,32).rotation.z=Math.PI/2; cyl(.45,.45,.06,M.cabinet,.92,.8,0,g,32).rotation.z=Math.PI/2;
+  label('CO₂ PRODUCT · to storage or e-fuel synthesis', -1.0, 1.7, 3.4, 1);
+}
+
+/* H₂ buffer + O₂ vent */
+{
+  const g = group(9.5, 0, -3.2, {
+    title:'Hydrogen buffer',
+    body:'Hydrogen from the cathode side of the stacks is collected here. Brineworks pairs it with the captured CO₂ as feedstock for e-methanol or sustainable aviation fuel.',
+    dim:'Vertical vessel, Ø0.7 m × 1.8 m.'
+  });
+  cyl(.35,.35,1.8,M.cabinet,0,.95,0,g,32);
+  cyl(.3,.35,.1,M.cabinet,0,1.9,0,g,32);
+  box(.9,.05,.9,M.frame,0,.025,0,g);
+  label('H₂ BUFFER', 9.5, 2.35, -3.2, .9);
+  const v = group(8.3, 0, -2.6, {title:'Oxygen vent', body:'Oxygen from the anode side is vented to atmosphere in this demonstration layout.', dim:'Vent stack to 3.2 m.'});
+  cyl(.08,.1,.15,M.frame,0,3.25,0,v,16);
+  label('O₂ VENT', 8.3, 3.7, -2.6, .8);
+  cloud(50, C.o2, .09, .6, [8.3, 3.4, -2.6, .15, .05, .15], [0,.9,0], 1.6, 'plume');
+}
+
+/* ------------------------------------------------------------------ */
+/* CONTROL CABINET, RECTIFIER, RENEWABLE POWER IN                      */
+{
+  const g = group(10.0, 0, 1.6, {
+    title:'Control cabinet (PLC and HMI)',
+    body:'Sequences the whole loop: pump speeds, fan speeds, acid and base dosing, and the current set-point for each stack. Because the electrolyzer tolerates intermittent operation, the controller ramps the stacks up and down with the available renewable power rather than needing a steady supply.',
+    dim:'Floor-standing cabinet, 0.8 m × 0.5 m × 2.0 m.'
+  });
+  box(.8,2.0,.5,M.cabinet,0,1.0,0,g);
+  box(.82,.03,.52,M.cabinetDark,0,2.01,0,g); box(.82,.08,.52,M.cabinetDark,0,.04,0,g);
+  const screen = box(.4,.3,.02,new THREE.MeshStandardMaterial({map:hmiTex, emissive:0xffffff, emissiveMap:hmiTex, emissiveIntensity:.6}),0,1.45,.26,g);
+  [[-.25,0x2fb46f],[-.15,0x2fb46f],[-.05,0xf2c23d]].forEach(([x,c])=> cyl(.015,.015,.02,new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:1}),x,1.1,.255,g,8).rotation.x=Math.PI/2);
+  box(.02,.25,.02,M.dark,.32,1.0,.26,g);  /* handle */
+  label('CONTROL CABINET · PLC / HMI', 10.0, 2.45, 1.6, 1);
+
+  const r = group(10.0, 0, 0.0, {
+    title:'Rectifier (DC power supply)',
+    body:'Converts the incoming AC or PV power to the low-voltage, high-current DC the stacks need, and sets the stack current on command from the PLC. Copper busbars carry the current to the stack end plates.',
+    dim:'1.2 m × 0.7 m × 1.4 m with cooling fins.'
+  });
+  box(1.2,1.4,.7,M.cabinetDark,0,.7,0,r);
+  for(let i=0;i<8;i++) box(.02,1.2,.74,M.frame,-.42+i*.12,.7,0,r);
+  label('RECTIFIER · DC to stacks', 10.0, 1.8, 0.0, .9);
+
+  const pv = group(12.6, 0, 3.6, {
+    title:'Intermittent renewable power',
+    body:'Solar or wind feeds the plant directly. Running the electrolyzer only when cheap power is available is what Brineworks counts on to get the capture cost below €100 per tonne.',
+    dim:'Representative PV array on a pole. Real plants connect to a much larger PV or wind supply.'
+  });
+  cyl(.06,.06,2.2,M.frame,0,1.1,0,pv,12);
+  const panel = box(2.0,.05,1.3,M.pv,0,2.3,0,pv); panel.rotation.x = -.45;
+  const frameP = box(2.05,.02,1.35,M.galv,0,2.27,0,pv); frameP.rotation.x = -.45;
+  label('RENEWABLE POWER IN', 12.6, 3.3, 3.6, .9);
+}
+
+/* ------------------------------------------------------------------ */
+/* PIPEWORK AND FLOWS (points in metres)                               */
+const R = .06;
+/* 1 brine: tank → pump → stacks inlet manifolds (right end, x=7.24) */
+pipe([[5.85,.25,3.5],[5.45,.25,3.5]], C.brine, R, {flow:false});
+pipe([[4.95,.25,3.5],[4.6,.25,3.5],[4.6,.25,.4],[7.9,.25,.4],[7.9,.75,.4],[7.9,.75,-.6],[7.3,.75,-.6]], C.brine, R, {speed:1.0});
+pipe([[7.9,.75,-.6],[7.9,.75,-1.4],[7.3,.75,-1.4]], C.brine, R, {speed:1.0});
+/* 2 base: stacks left end (x=5.76) → behind contactors → risers to spray headers */
+pipe([[5.76,.95,-1.4],[5.3,.95,-1.4],[5.3,.3,-1.4],[4.5,.3,-1.4],[4.5,.3,-6.3],[-5.8,.3,-6.3]], C.base, R, {speed:1.0});
+AC_X.forEach(cx=> pipe([[cx+.8,.3,-6.3],[cx+.8,2.85,-6.3],[cx+.8,2.85,-5.0],[cx+.8,2.72,-5.0]], C.base, R*.8, {speed:1.0}));
+/* 3 carbonate-rich: sump outlets → collector → release vessel */
+AC_X.forEach(cx=> pipe([[cx-.8,.3,-5.5],[cx-.8,.3,-5.95],[cx-.8,.15,-5.95]], C.carb, R*.8, {speed:.8}));
+pipe([[-5.9,.15,-5.95],[3.6,.15,-5.95],[3.6,.15,2.0],[3.6,1.3,2.0],[3.0,1.3,2.0]], C.carb, R, {speed:1.0});
+/* 4 acid: stacks left end (lower outlet) → top of release vessel */
+pipe([[5.76,.62,-.6],[5.3,.62,-.6],[5.3,.5,-.6],[4.1,.5,-.6],[4.1,.5,1.0],[2.5,.5,1.0],[2.5,2.9,1.0],[2.5,2.9,1.8],[2.5,2.62,1.8]], C.acid, R*.9, {speed:1.0});
+/* 5 neutralised brine back to tank */
+pipe([[2.5,.4,2.5],[2.5,.25,4.4],[6.5,.25,4.4],[6.5,1.4,4.4],[6.5,1.4,3.5],[6.5,1.25,3.5]], C.brine, R, {speed:1.0});
+/* 6 hydrogen: stack top → H₂ buffer */
+pipe([[6.2,1.14,-1.4],[6.2,1.9,-1.4],[6.2,1.9,-3.2],[9.5,1.9,-3.2],[9.5,1.95,-3.2]], C.h2, R*.6, {speed:1.5, size:.07});
+pipe([[6.2,1.14,-.6],[6.2,1.9,-.6],[6.2,1.9,-1.4]], C.h2, R*.6, {speed:1.5, size:.07});
+/* 7 oxygen: stack top → vent */
+pipe([[6.8,1.14,-1.4],[6.8,1.55,-1.4],[6.8,1.55,-2.6],[8.3,1.55,-2.6],[8.3,3.2,-2.6]], C.o2, R*.6, {speed:1.5, size:.07});
+pipe([[6.8,1.14,-.6],[6.8,1.55,-.6],[6.8,1.55,-1.4]], C.o2, R*.6, {speed:1.5, size:.07});
+/* 8 CO₂ gas: release vessel top → product buffer */
+pipe([[2.5,2.7,2.0],[2.5,3.1,2.0],[-1.0,3.1,2.0],[-1.0,3.1,3.4],[-1.0,1.3,3.4]], C.co2, R*.8, {speed:1.2, size:.08});
+/* power + control cabling (no flow) */
+pipe([[12.6,.05,3.6],[12.6,.05,.0],[10.6,.05,.0]], 0x111111, .025, {flow:false});
+pipe([[9.4,.5,-.2],[7.26,.5,-.6]], 0xb87333, .02, {flow:false});
+pipe([[9.4,.5,.2],[8.6,.5,.2],[8.6,.5,-1.4],[7.26,.5,-1.4]], 0xb87333, .02, {flow:false});
+pipe([[9.6,.6,1.6],[9.6,.05,1.6],[4.2,.05,1.6],[4.2,.05,-6.6],[-5.6,.05,-6.6]], 0x4a4f55, .018, {flow:false});
+AC_X.forEach(cx=> pipe([[cx-.6,.05,-6.6],[cx-.6,3.3,-6.6],[cx-.6,3.3,-5.3]], 0x4a4f55, .015, {flow:false}));
+pipe([[9.6,.6,1.6],[9.6,.6,.4]], 0x4a4f55, .018, {flow:false});
+
+/* ------------------------------------------------------------------ */
+/* CONTROLS: orbit + fly                                               */
+const views = {
+  overview:   {pos:[13,8,15],  tgt:[2,1.2,-1]},
+  contactors: {pos:[-2.5,3.5,2.5], tgt:[-2.5,1.6,-5]},
+  stacks:     {pos:[8.5,2.6,2.2], tgt:[6.5,.8,-1]},
+  release:    {pos:[.5,2.8,5.5],  tgt:[2.3,1.4,2.2]},
+  control:    {pos:[12.5,2.4,3.5], tgt:[10,1.1,.8]},
+  inside:     {pos:[-1.2,1.7,-2.6], tgt:[-2.5,1.6,-5.0]}
+};
+const state = { mode:'orbit', target:new THREE.Vector3(2,1.2,-1), sph:new THREE.Spherical(), keys:{}, eye:false };
+function setOrbitFrom(pos, tgt){
+  state.target.set(...tgt); camera.position.set(...pos);
+  state.sph.setFromVector3(camera.position.clone().sub(state.target));
+  camera.lookAt(state.target);
+}
+function applyOrbit(){
+  state.sph.phi = Math.max(0.05, Math.min(Math.PI/2 - 0.02, state.sph.phi));
+  state.sph.radius = Math.max(1, Math.min(80, state.sph.radius));
+  camera.position.setFromSpherical(state.sph).add(state.target);
+  camera.lookAt(state.target);
+}
+function setFlyFrom(pos, tgt){
+  camera.position.set(...pos); camera.lookAt(new THREE.Vector3(...tgt));
+}
+function goView(name){
+  const v = views[name]; if(!v) return;
+  if(state.mode==='orbit') setOrbitFrom(v.pos, v.tgt); else setFlyFrom(v.pos, v.tgt);
+}
+function setMode(m){
+  if(m === state.mode) return;
+  if(m === 'fly'){
+    /* keep the current camera; lookAt already set the YXZ rotation */
+    camera.lookAt(state.target);
+  } else {
+    const dir = new THREE.Vector3(); camera.getWorldDirection(dir);
+    state.target.copy(camera.position).add(dir.multiplyScalar(6));
+    state.sph.setFromVector3(camera.position.clone().sub(state.target));
+    applyOrbit();
+  }
+  state.mode = m;
+  document.getElementById('modeOrbit').classList.toggle('on', m==='orbit');
+  document.getElementById('modeFly').classList.toggle('on', m==='fly');
+  canvas.classList.toggle('fly', m==='fly');
+}
+setOrbitFrom(views.overview.pos, views.overview.tgt);
+
+/* pointer handling */
+let drag = null, moved = 0;
+const pinch = {d:0, mid:[0,0]};
+canvas.addEventListener('pointerdown', e=>{
+  canvas.setPointerCapture(e.pointerId);
+  drag = {x:e.clientX, y:e.clientY, b:e.button, shift:e.shiftKey}; moved = 0;
+});
+canvas.addEventListener('pointermove', e=>{
+  if(!drag){ hover(e); return; }
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY; moved += Math.abs(dx)+Math.abs(dy);
+  if(state.mode==='orbit'){
+    if(drag.b===2 || drag.shift){ pan(dx,dy); }
+    else { state.sph.theta -= dx*0.006; state.sph.phi -= dy*0.006; applyOrbit(); }
+  } else {
+    camera.rotation.y -= dx*0.0035;
+    camera.rotation.x = Math.max(-1.5, Math.min(1.5, camera.rotation.x - dy*0.0035));
+  }
+});
+canvas.addEventListener('pointerup', e=>{ if(drag && moved < 6) pick(e); drag = null; });
+canvas.addEventListener('pointercancel', ()=> drag = null);
+canvas.addEventListener('contextmenu', e=> e.preventDefault());
+canvas.addEventListener('wheel', e=>{
+  e.preventDefault();
+  if(state.mode==='orbit'){ state.sph.radius *= Math.pow(1.1, Math.sign(e.deltaY)); applyOrbit(); }
+  else { const d = new THREE.Vector3(); camera.getWorldDirection(d); camera.position.addScaledVector(d, -Math.sign(e.deltaY)*0.6); }
+}, {passive:false});
+function pan(dx,dy){
+  const k = state.sph.radius * 0.0012;
+  const right = new THREE.Vector3(), up = new THREE.Vector3(0,1,0);
+  camera.getWorldDirection(right); right.cross(up).normalize();
+  state.target.addScaledVector(right, -dx*k).addScaledVector(up, dy*k);
+  applyOrbit();
+}
+/* two-finger touch: pinch zoom + pan */
+canvas.addEventListener('touchstart', e=>{ if(e.touches.length===2){ pinch.d = tdist(e); pinch.mid = tmid(e); drag = null; } }, {passive:true});
+canvas.addEventListener('touchmove', e=>{
+  if(e.touches.length===2){
+    const d = tdist(e), mid = tmid(e);
+    if(state.mode==='orbit'){ state.sph.radius *= pinch.d/d; pan(mid[0]-pinch.mid[0], mid[1]-pinch.mid[1]); }
+    else { const dir = new THREE.Vector3(); camera.getWorldDirection(dir); camera.position.addScaledVector(dir, (d-pinch.d)*0.02); }
+    pinch.d = d; pinch.mid = mid;
+  }
+}, {passive:true});
+function tdist(e){ const a=e.touches[0], b=e.touches[1]; return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY); }
+function tmid(e){ const a=e.touches[0], b=e.touches[1]; return [(a.clientX+b.clientX)/2, (a.clientY+b.clientY)/2]; }
+
+window.addEventListener('keydown', e=>{ if(e.target.tagName==='INPUT') return; state.keys[e.code]=true; if(['Space','ArrowUp','ArrowDown'].includes(e.code)) e.preventDefault(); });
+window.addEventListener('keyup', e=>{ state.keys[e.code]=false; });
+function flyStep(dt){
+  const k = state.keys, sp = (k.ShiftLeft||k.ShiftRight ? 7 : 2.5) * dt;
+  const fwd = new THREE.Vector3(); camera.getWorldDirection(fwd);
+  if(state.eye){ fwd.y = 0; fwd.normalize(); }
+  const right = fwd.clone().cross(new THREE.Vector3(0,1,0)).normalize();
+  if(k.KeyW||k.ArrowUp) camera.position.addScaledVector(fwd, sp);
+  if(k.KeyS||k.ArrowDown) camera.position.addScaledVector(fwd, -sp);
+  if(k.KeyA||k.ArrowLeft) camera.position.addScaledVector(right, -sp);
+  if(k.KeyD||k.ArrowRight) camera.position.addScaledVector(right, sp);
+  if(!state.eye){ if(k.KeyE||k.Space) camera.position.y += sp; if(k.KeyQ||k.KeyC) camera.position.y -= sp; }
+  if(state.eye) camera.position.y = 1.7; else camera.position.y = Math.max(0.3, camera.position.y);
+}
+
+/* picking */
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+const outline = new THREE.BoxHelper(new THREE.Object3D(), 0xffd34d); outline.visible = false; scene.add(outline);
+const tip = document.getElementById('tip');
+let hovered = null;
+function castAt(e){
+  const r = canvas.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left)/r.width)*2-1, -((e.clientY - r.top)/r.height)*2+1);
+  ray.setFromCamera(ndc, camera);
+  const hits = ray.intersectObjects(pickables, true);
+  for(const h of hits){ let o = h.object; while(o && !o.userData.info) o = o.parent; if(o) return o; }
+  return null;
+}
+function hover(e){
+  const o = castAt(e);
+  if(o !== hovered){
+    hovered = o;
+    if(o){ outline.setFromObject(o); outline.visible = true; tip.textContent = o.userData.info.title; tip.hidden = false; }
+    else { outline.visible = false; tip.hidden = true; }
+    canvas.classList.toggle('pick', !!o);
+  }
+  if(o){ tip.style.left = e.clientX+'px'; tip.style.top = e.clientY+'px'; }
+}
+function pick(e){
+  const o = castAt(e); if(!o) return;
+  const i = o.userData.info;
+  document.getElementById('infoTitle').textContent = i.title;
+  document.getElementById('infoBody').textContent = i.body;
+  document.getElementById('infoDim').textContent = i.dim || '';
+  document.getElementById('info').hidden = false;
+}
+document.getElementById('infoClose').addEventListener('click', ()=> document.getElementById('info').hidden = true);
+
+/* UI wiring */
+document.getElementById('modeOrbit').addEventListener('click', ()=> setMode('orbit'));
+document.getElementById('modeFly').addEventListener('click', ()=> setMode('fly'));
+document.querySelectorAll('[data-view]').forEach(b=> b.addEventListener('click', ()=> goView(b.dataset.view)));
+document.getElementById('collapse').addEventListener('click', e=>{
+  const m = document.getElementById('main'); m.classList.toggle('collapsed');
+  e.target.textContent = m.classList.contains('collapsed') ? '+' : '–';
+});
+const show = { flows:true, air:true, labels:true };
+document.getElementById('tFlows').addEventListener('change', e=>{ show.flows = e.target.checked; flows.forEach(f=> f.pts.visible = show.flows); clouds.forEach(c=>{ if(!airClouds.includes(c)) c.pts.visible = show.flows; }); });
+document.getElementById('tAir').addEventListener('change', e=>{ show.air = e.target.checked; airClouds.forEach(c=> c.pts.visible = show.air); });
+document.getElementById('tLabels').addEventListener('change', e=>{ labels.forEach(l=> l.visible = e.target.checked); });
+document.getElementById('tCut').addEventListener('change', e=>{ cutaway.forEach(m=> m.material = e.target.checked ? M.galvT : M.galv); });
+document.getElementById('tEye').addEventListener('change', e=>{ state.eye = e.target.checked; if(state.eye && state.mode!=='fly') setMode('fly'); });
+if(window.matchMedia('(max-width: 600px)').matches){ document.getElementById('main').classList.add('collapsed'); document.getElementById('collapse').textContent='+'; }
+
+/* resize + loop */
+function resize(){
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if(canvas.width !== w*renderer.getPixelRatio() || canvas.height !== h*renderer.getPixelRatio()){
+    renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+}
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  resize();
+  const dt = Math.min(clock.getDelta(), 0.05), sim = reduced ? dt*0.25 : dt;
+  if(state.mode==='fly') flyStep(dt);
+  const t = clock.elapsedTime;
+  if(show.flows) for(const f of flows){
+    const a = f.pts.geometry.attributes.position;
+    for(let i=0;i<f.n;i++){ const u = (f.off[i] + t*f.speed*(reduced?.25:1)) % 1; const p = f.path.getPointAt(u); a.setXYZ(i, p.x, p.y, p.z); }
+    a.needsUpdate = true;
+  }
+  for(const c of clouds){
+    if(!c.pts.visible) continue;
+    for(let i=0;i<c.n;i++) stepParticle(c, i, sim);
+    c.pts.geometry.attributes.position.needsUpdate = true;
+  }
+  fans.forEach(f=> f.rotation.y += sim*9);
+  if(hovered && outline.visible) outline.update();
+  /* labels shrink as you approach so they never fill the view */
+  for(const l of labels){ const f = Math.max(.3, Math.min(1, camera.position.distanceTo(l.position)/14)); l.scale.set(l.userData.w*f, l.userData.h*f, 1); }
+  renderer.render(scene, camera);
+}
+document.getElementById('loading').remove();
+animate();
+/* Re-draw labels once the display font is in. */
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{
+  const old = labels.splice(0);
+  old.forEach(s=>{ scene.remove(s); const u = s.userData; const n = label(u.text, u.x, u.y, u.z, u.scale); n.visible = s.visible; });
+});
+})();
+</script>
+</body>
+</html>
